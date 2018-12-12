@@ -6,3 +6,26 @@ typedef struct relAddr {           /* 変数, 引数, 関数のアドレスの�
   int level;
   int addr;
 } RelAddr;
+
+void blockBegin(int firstAddr);    /* ブロックの始まり(最初の変数の番地)で呼ばれる */
+void blockEnd();
+
+int bLevel();                      /* 現ブロックのレベルを返す */
+int fPars();                       /* 現ブロックの関数のパラメータ数を返す */
+int enterTfunc(char *id, int v);   /* 名前表に関数名と番地を登録 */
+
+int enterTvar(char *id);           /* 名前表に変数名を登録 */
+int enterTpar(char *id);           /* 名前表にパラメータを登録 */
+int enterTconst(char *id, int v);  /* 名前表に定数名とその値を登録 */
+
+int endpar();
+void changeV(int ti, int newVal);  /* 名前表[ti]の値(関数の先頭番地)の変更 */
+
+int searchT(char *id, KindT k);    /* 名前idの名前表の位置を返す */
+                                   /* 末宣言の時エラーとする */
+int kindT(int i);                  /* 名前表[i]の種類を返す */
+
+RelAddr relAddr(int ti);           /* 名前表[ti]のアドレスを返す */
+int val(int ti);                   /* 名前表[ti]のvalueを返す */
+int npars(int ti);                 /* 名前表[ti]の関数のパラメータ数を返す */
+int frameL();                      /* そのブロックで実行時に必要とするメモリー容量 */

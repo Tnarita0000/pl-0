@@ -77,26 +77,6 @@ static struct keyWd KeyWdT[] = {
 
 static openSourceDebug = 0;
 
-char nextChar() {
-  char ch;
-  if (lineIndex == -1) {
-    if (fgets(line, MAXLINE, fpi) != NULL) {
-      // printf("%s", line);
-      lineIndex = 0;
-    } else {
-      // printf("<EOF>\n");
-      putchar('\n');
-      exit(1);
-    }
-  }
-
-  if ((ch = line[lineIndex++]) == '\n') {
-    lineIndex = -1;
-    return ' ';
-  }
-  return ch;
-}
-
 void outputSourceCode() {
   while (true) {
     printf("%c", nextChar());
@@ -198,4 +178,143 @@ void printcToken() {
     }
   } else if (i == (int)Num)
     fprintf(fptex, "%d", cToken.u.value); return;
+}
+
+// void error(char *m) {
+// }
+// void errorNoCheck() {
+// }
+// void errorType(char *m) {
+// }
+// void errorInsert(KeyId k) {
+// }
+// void errorMissingOp() {
+// }
+// void errorDelete() {
+// }
+// void errorMessage(char *m) {
+// }
+// void errorF(char *m) {
+// }
+
+char nextChar() {
+  char ch;
+  if (lineIndex == -1) {
+    if (fgets(line, MAXLINE, fpi) != NULL) {
+      // NOTE: 通常の例外出力の場合
+      puts(line);
+      lineIndex = 0;
+    } else {
+      // NOTE: EOFに達したらコンパイル終了
+      // TODO
+      // errorF("end of file\n");
+    }
+  }
+
+  if((ch = line[lineIndex++]) == '\n') {
+    lineIndex = -1;
+    return '\n';
+  }
+  return ch;
+}
+
+Token nextToken() {
+  int i = 0;
+  int num;
+  KeyId cc;
+  Token temp;
+  char identifier[MAXNAME];
+
+  printcToken();
+  spaces = 0; CR = 0;
+
+  while (1) {
+    if (ch == ' ')
+      spaces++;
+    else if (ch == '\t')
+      spaces+=TAB;
+    else if (ch == '\n') {
+      spaces = 0; CR++;
+    } else break;
+    ch = nextChar();
+  }
+
+  switch (cc = charClassT[(int)ch]) {
+    case letter:
+      do {
+        if (i < MAXNAME)
+          identifier[i] = ch;
+        i++; ch = nextChar();
+      } while ( charClassT[(int)ch] == letter
+          || charClassT[(int)ch] == digit);
+
+      if (i >= MAXNAME) {
+        // TODO
+        /*errorMessage("too long");*/
+        i = MAXNAME - 1;
+      }
+      identifier[i] = '\0'; // \0: 文字終端記号(NULL文字)
+
+      for (i=0; i<end_of_KeyWd; i++) {
+        if (strcmp(identifier, KeyWdT[i].word) == 0) {
+          temp.kind = KeyWdT[i].keyId;
+          cToken = temp; printed = 0;
+          return temp;
+        }
+      }
+
+    case digit:
+      num = 0;
+      do {
+        num = 10 * num + (ch - '0');
+        i++; ch = nextChar();
+      } while (charClassT[(int)ch] == digit);
+
+      if (i > MAXNUM)
+        // TODO
+        /*errorMessage("too large");*/
+
+        temp.kind = Num;
+      temp.u.value = num;
+      break;
+
+    case colon:
+      if ((ch = nextChar()) == '=') { // PL/0'言語の代入文 :=
+        ch = nextChar();
+        temp.kind = Assign;
+        break;
+      } else {
+        temp.kind = nul;
+        break;
+      }
+
+    case Lss:
+      if ((ch = nextChar()) == '=') { // <=
+        ch = nextChar();
+        temp.kind = LssEq;
+        break;
+      } else if (ch == '>') {         // <>
+        ch = nextChar();
+        temp.kind = NotEq;
+        break;
+      } else {
+        temp.kind = Lss;
+        break;
+      }
+
+    case Gtr:
+      if ((ch = nextChar()) == '=') {  // >=
+        ch = nextChar();
+        temp.kind = GtrEq;
+        break;
+      } else {
+        temp.kind = Gtr;
+      }
+    default:
+      temp.kind = cc;
+      ch = nextChar(); break;
+  }
+
+  cToken = temp; printed = 0;
+  return temp;
 }

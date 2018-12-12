@@ -2,10 +2,10 @@
 #define GET_SOURCE
 #include "getSource.c"
 #endif
-// #ifndef TBL
-// #define TBL
-// #include "table.h"
-// #endif
+#ifndef TBL
+#define TBL
+#include "table.h"
+#endif
 // #include "codegen.h"
 
 #define MINEERROR 3
@@ -24,16 +24,6 @@ static Token token;
 // static void condition();
 // static isStBeginKey(Token t);
 
-Token nextToken() {
-  int i = 0;
-  int num;
-  KeyId cc;
-  Token temp;
-  char identifier[MAXNAME];
-
-  printcToken();
-}
-
 int compile() {
   int i = 0;
   printf("... Start compilation ...\n");
@@ -42,7 +32,7 @@ int compile() {
 
   /* compile */
   token = nextToken();
-  //blockBegin(FIRSTADDR);
+  /*blockBegin(FIRSTADDR);*/
   //block(0);
   /* compile */
 //

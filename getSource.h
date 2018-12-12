@@ -42,7 +42,7 @@ typedef struct token {     /* トークンの型 */
 //  *     id     value
 //  */
 // 
-// Token nextToken();        /* 次のトークンを読んで返す */
+Token nextToken();        /* 次のトークンを読んで返す */
 // Token checkGet(Token t, KeyId k);  /* t.kind == kのチェック */
 
 int openSource(char fileName[]);   /* ソースファイルを開く処理 */
