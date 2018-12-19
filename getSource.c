@@ -31,7 +31,7 @@ static int errorNo = 0;
 
 /* prototype declaration */
 static char nextChar();
-static isKeySym(KeyId k);     /* 記号かどうか */
+static int isKeySym(KeyId k);     /* 記号かどうか */
 static int isKeyWd(KeyId k);  /* 予約後かどうか */
 static void printSpaces();    /* トークンの前のスペースの印字 */
 static void printToken();     /* トークンの印字 */
@@ -75,7 +75,7 @@ static struct keyWd KeyWdT[] = {
   {"$dummy2", end_of_KeySym}
 };
 
-static openSourceDebug = 0;
+static int openSourceDebug = 0;
 
 void outputSourceCode() {
   while (true) {

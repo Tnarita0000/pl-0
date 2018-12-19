@@ -2,18 +2,23 @@
 #define GET_SOURCE
 #include "getSource.c"
 #endif
-#ifndef TBL
-#define TBL
-#include "table.h"
+
+// #ifndef TBL
+// #define TBL
+#include "table.c"
+// #endif
+
+#ifndef CODE_GEN
+#define CODE_GEN
+#include "codegen.c"
 #endif
-// #include "codegen.h"
 
 #define MINEERROR 3
 #define FIRSTADDR 2  /* 各ブロックの最初の変数のアドレス */
 
 static Token token;
-// 
-// static void block(int pIndex);
+
+static void block(int pIndex);    /* ブロックのコンパイル */
 // static void constDecl();
 // static void varDecl();
 // static void funcDecl();
@@ -33,8 +38,8 @@ int compile() {
   /* compile */
   token = nextToken();
   blockBegin(FIRSTADDR);
-  //block(0);
-  /* compile */
+
+  block(0);
 //
 //  finalSource();
 //
@@ -43,4 +48,9 @@ int compile() {
 //    printf("%d errors\n", i);
 //
   return i<MINEERROR;
+}
+
+void block(int pIndex) { /* pIndexはこのブロックの関数のindex */
+//  int backP;
+//  backP = genCodeV(jmp, 0);
 }
