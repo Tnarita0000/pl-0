@@ -15,7 +15,7 @@ typedef enum ops {
   add,
   sub,
   mul,
-  div,
+  divi,
   odd,
   eq,
   ls,
