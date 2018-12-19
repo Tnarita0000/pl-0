@@ -32,7 +32,7 @@ int compile() {
 
   /* compile */
   token = nextToken();
-  /*blockBegin(FIRSTADDR);*/
+  blockBegin(FIRSTADDR);
   //block(0);
   /* compile */
 //
