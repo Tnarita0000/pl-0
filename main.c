@@ -14,8 +14,7 @@ int main() {
     return 0;
 
   if (compile())
-    return 1;
-  //   execute();
+    execute();
 
   // closeSource();
   return 1;

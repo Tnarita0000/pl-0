@@ -208,6 +208,9 @@ void errorInsert(KeyId k) {
 // }
 // void errorF(char *m) {
 // }
+int errorN() {
+  return errorNo;
+}
 
 char nextChar() {
   char ch;

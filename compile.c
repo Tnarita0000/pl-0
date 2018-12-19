@@ -42,15 +42,15 @@ int compile() {
   block(0);
 
   finalSource();
-//
-//  i = errorN();
-//  if (i!=0)
-//    printf("%d errors\n", i);
-//
+
+  i = errorN();
+  if (i!=0)
+    printf("%d errors\n", i);
+
   return i<MINEERROR;
 }
 
 void block(int pIndex) { /* pIndexはこのブロックの関数のindex */
-//  int backP;
-//  backP = genCodeV(jmp, 0);
+  int backP;
+  backP = genCodeV(jmp, 0);
 }

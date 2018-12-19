@@ -12,6 +12,7 @@ typedef enum codes {
 } OpCode;
 
 typedef enum ops {
+  neg,
   add,
   sub,
   mul,
