@@ -40,8 +40,8 @@ int compile() {
   blockBegin(FIRSTADDR);
 
   block(0);
-//
-//  finalSource();
+
+  finalSource();
 //
 //  i = errorN();
 //  if (i!=0)

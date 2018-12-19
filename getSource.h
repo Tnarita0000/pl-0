@@ -48,10 +48,10 @@ Token nextToken();        /* 次のトークンを読んで返す */
 int openSource(char fileName[]);   /* ソースファイルを開く処理 */
 // void closeSource();
 void initSource();                 /* テーブルの初期設定 */
-// void finalSource();                /* ソースの最後のチェック, texファイルん初期設定 */
+void finalSource();                /* ソースの最後のチェック, texファイルん初期設定 */
 // 
 // void errorType(char *m);           /* 型エラーを.textファイルに出力 */
-// void errorInsert(KeyId k);         /* keyString(k)を.texファイルに挿入 */
+void errorInsert(KeyId k);         /* keyString(k)を.texファイルに挿入 */
 // void errorMissingId();             /* 名前がないとのメッセージを.texファイルに挿入 */
 // void errorMissingOp();             /* 演算子がないとのメッセージを.texファイルに挿入 */
 // void errorDelete();                /* 今読んだトークンを読み捨て(.texファイルに挿入) */

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
+#include <stdlib.h>
 #ifndef GET_SOURCE_H
 #define GET_SOURCE_H
 #include "getSource.h"
@@ -182,12 +183,23 @@ void printcToken() {
 
 // void error(char *m) {
 // }
-// void errorNoCheck() {
-// }
+void errorNoCheck() {
+  if (errorNo++ > MAXERROR) {
+    fprintf(fptex, "too many errors\n\\end{document}\n");
+    printf("abort compilation\n");
+    exit(1);
+  }
+}
 // void errorType(char *m) {
 // }
-// void errorInsert(KeyId k) {
-// }
+void errorInsert(KeyId k) {
+  if (k > end_of_KeyWd) {
+    fprintf(fptex, "\\ \\insert{{\\bf %s}}", KeyWdT[k].word);
+  } else {
+    fprintf(fptex, "\\ \\insert{$%s$}}", KeyWdT[k].word);
+  }
+  errorNoCheck();
+}
 // void errorMissingOp() {
 // }
 // void errorDelete() {
@@ -317,4 +329,14 @@ Token nextToken() {
 
   cToken = temp; printed = 0;
   return temp;
+}
+
+void finalSource() {
+  if (cToken.kind == Period) {
+    printcToken();
+  } else {
+    errorInsert(Period);
+  }
+
+  fprintf(fptex, "\n\\end{document}\n");
 }
